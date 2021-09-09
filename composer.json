@@ -1,5 +1,5 @@
 {
-    "name": "mathieu-dumoutier/oauth2-client",
+    "name": "mathieu-dumoutier/oauth2-orcid",
     "description": "ORCID OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
     "license": "MIT",
     "authors": [
