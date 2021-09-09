@@ -9,7 +9,7 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
 use MathieuDumoutier\OAuth2\Client\Exception\OrcidIdentityProviderException;
-use MathieuDumoutier\OAuth2\Client\OrcidRessourceOwner;
+use MathieuDumoutier\OAuth2\Client\Provider\OrcidResourceOwner;
 use Psr\Http\Message\ResponseInterface;
 
 class Orcid extends AbstractProvider
@@ -72,7 +72,7 @@ class Orcid extends AbstractProvider
 
     protected function createResourceOwner(array $response, AccessToken $token): ResourceOwnerInterface
     {
-        return new OrcidRessourceOwner($response);
+        return new OrcidResourceOwner($response);
     }
 
     protected function getAuthorizationHeaders($token = null)
