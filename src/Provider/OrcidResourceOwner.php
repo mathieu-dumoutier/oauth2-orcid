@@ -19,6 +19,6 @@ class OrcidResourceOwner implements ResourceOwnerInterface
 
     public function toArray(): array
     {
-        return 'toto';
+        return $this->response;
     }
 }
