@@ -18,8 +18,8 @@ class Orcid extends AbstractProvider
 
     const OAUTH_BASE_PRODUCTION = 'https://orcid.org';
     const OAUTH_BASE_SANDBOX = 'https://sandbox.orcid.org';
-    const API_BASE_PRODUCTION = 'https://api.orcid.org/v2.1';
-    const API_BASE_SANDBOX = 'https://api.sandbox.orcid.org/v2.1';
+    const API_BASE_PRODUCTION = 'https://api.orcid.org/v3.0';
+    const API_BASE_SANDBOX = 'https://api.sandbox.orcid.org/v3.0';
 
     public function __construct(array $options = [], array $collaborators = [])
     {
