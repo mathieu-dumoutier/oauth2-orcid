@@ -55,7 +55,7 @@ class Orcid extends AbstractProvider
     protected function getDefaultScopes()
     {
         return [
-            '/read-limited /activities/update /person/update',
+            '/authenticate',
         ];
     }
 
