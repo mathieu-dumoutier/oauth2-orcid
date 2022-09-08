@@ -24,6 +24,7 @@ knpu_oauth2_client:
             provider_class: MathieuDumoutier\OAuth2\Client\Provider\Orcid
             provider_options:
                 "SANDBOX_MODE": '%env(ORCID_SANDBOX_MODE)%'
+                "scopes": '%env(ORCID_SCOPES)%'
             client_id: '%env(ORCID_APP_ID)%'
             client_secret: '%env(ORCID_APP_SECRET)%'
             redirect_route: orcid_check
@@ -31,10 +32,11 @@ knpu_oauth2_client:
             use_state: false
 ```
 
-You must define the 3 environment variables :
+You must define the 4 environment variables :
 * ORCID_SANDBOX_MODE
 * ORCID_APP_ID
 * ORCID_APP_SECRET
+* ORCID_SCOPES
 
 You must create the route "orcid_check".
 

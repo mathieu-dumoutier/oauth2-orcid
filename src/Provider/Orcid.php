@@ -16,6 +16,8 @@ class Orcid extends AbstractProvider
 {
     protected bool $sandbox;
 
+    private string $scopes;
+
     const OAUTH_BASE_PRODUCTION = 'https://orcid.org';
     const OAUTH_BASE_SANDBOX = 'https://sandbox.orcid.org';
     const API_BASE_PRODUCTION = 'https://api.orcid.org/v3.0';
@@ -25,6 +27,7 @@ class Orcid extends AbstractProvider
     {
         parent::__construct($options, $collaborators);
         $this->sandbox = (bool) $options['SANDBOX_MODE'];
+        $this->scopes = $options['scopes'];
     }
 
     public function getBaseUrl(): string
@@ -55,7 +58,7 @@ class Orcid extends AbstractProvider
     protected function getDefaultScopes()
     {
         return [
-            '/authenticate',
+            $this->scopes,
         ];
     }
 
