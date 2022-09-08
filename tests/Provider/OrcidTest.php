@@ -21,7 +21,8 @@ final class OrcidTest extends TestCase
             'clientId' => self::APP_ID,
             'clientSecret' => self::APP_SECRET,
             'redirectUri' => self::REDIRECT_URI,
-            'SANDBOX_MODE' => 0
+            'SANDBOX_MODE' => 0,
+            'scopes' => '/authenticate',
         ]);
     }
 
