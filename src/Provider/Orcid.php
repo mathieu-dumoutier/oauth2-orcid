@@ -16,7 +16,7 @@ class Orcid extends AbstractProvider
 {
     protected bool $sandbox;
 
-    private string $scopes;
+    public string $scopes;
 
     const OAUTH_BASE_PRODUCTION = 'https://orcid.org';
     const OAUTH_BASE_SANDBOX = 'https://sandbox.orcid.org';
