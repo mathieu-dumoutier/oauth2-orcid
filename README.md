@@ -16,15 +16,17 @@ Usage is the same as The League's OAuth client, using `\MathieuDumoutier\OAuth2\
 
 ## knpuniversity/oauth2-client-bundle configuration example
 
-```json
+```yaml
 knpu_oauth2_client:
     clients:
         orcid_oauth:
             type: generic
             provider_class: MathieuDumoutier\OAuth2\Client\Provider\Orcid
             provider_options:
-                "SANDBOX_MODE": '%env(ORCID_SANDBOX_MODE)%'
-                "scopes": '%env(ORCID_SCOPES)%'
+                "scopes": '%env(ORCID_OAUTH_SCOPES)%'
+                "use_member_api": '%env(ORCID_OAUTH_SANDBOX_MODE)%'
+                "sandbox_mode": '%env(ORCID_OAUTH_MEMBER_API)%'
+                "api_version": '%env(ORCID_OAUTH_API_VERSION)%'        
             client_id: '%env(ORCID_APP_ID)%'
             client_secret: '%env(ORCID_APP_SECRET)%'
             redirect_route: orcid_check
@@ -32,11 +34,13 @@ knpu_oauth2_client:
             use_state: false
 ```
 
-You must define the 4 environment variables :
-* ORCID_SANDBOX_MODE
-* ORCID_APP_ID
+You must define the 6 environment variables :
+* ORCID_APP_ID 
 * ORCID_APP_SECRET
-* ORCID_SCOPES
+* ORCID_OAUTH_SCOPES (see https://info.orcid.org/documentation/integration-guide/getting-started-with-your-orcid-integration/#easy-faq-2569)
+* ORCID_OAUTH_SANDBOX_MODE (0 or 1)
+* ORCID_OAUTH_MEMBER_API (0 or 1)
+* ORCID_OAUTH_API_VERSION (v2.0, v2.1 or v3.0)
 
 You must create the route "orcid_check".
 

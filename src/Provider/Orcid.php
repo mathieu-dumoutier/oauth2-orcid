@@ -14,48 +14,64 @@ use Psr\Http\Message\ResponseInterface;
 
 class Orcid extends AbstractProvider
 {
-    protected bool $sandbox;
-
     public string $scopes;
+    public string $baseUrl;
+    public string $apiBaseUrl;
 
-    const OAUTH_BASE_PRODUCTION = 'https://orcid.org';
-    const OAUTH_BASE_SANDBOX = 'https://sandbox.orcid.org';
-    const API_BASE_PRODUCTION = 'https://api.orcid.org/v3.0';
-    const API_BASE_SANDBOX = 'https://api.sandbox.orcid.org/v3.0';
+    public const OAUTH_BASE_SANDBOX = 'https://sandbox.orcid.org';
+    public const API_PUBLIC_BASE_URL_SANDBOX = 'https://api.sandbox.orcid.org/';
+    public const API_MEMBER_BASE_URL_SANDBOX = 'https://api.sandbox.orcid.org/';
+    public const OAUTH_BASE_PRODUCTION = 'https://orcid.org';
+    public const API_PUBLIC_BASE_URL_PRODUCTION = 'https://pub.orcid.org/';
+    public const API_MEMBER_BASE_URL_PRODUCTION = 'https://api.orcid.org/';
 
     public function __construct(array $options = [], array $collaborators = [])
     {
         parent::__construct($options, $collaborators);
-        $this->sandbox = (bool) $options['SANDBOX_MODE'];
         $this->scopes = $options['scopes'];
+
+        if (true === (bool) $options['sandbox_mode']) {
+            $this->baseUrl = self::OAUTH_BASE_SANDBOX;
+            $this->apiBaseUrl = self::API_PUBLIC_BASE_URL_SANDBOX.$options['api_version'];
+            if (true === (bool) $options['use_member_api']) {
+                $this->apiBaseUrl = self::API_MEMBER_BASE_URL_SANDBOX.$options['api_version'];
+            }
+        } else {
+            $this->baseUrl = self::OAUTH_BASE_PRODUCTION;
+            $this->apiBaseUrl = self::API_PUBLIC_BASE_URL_PRODUCTION.$options['api_version'];
+            if (true === (bool) $options['use_member_api']) {
+                $this->apiBaseUrl = self::API_MEMBER_BASE_URL_PRODUCTION.$options['api_version'];
+
+            }
+        }
     }
 
     public function getBaseUrl(): string
     {
-        return true === $this->sandbox ? self::OAUTH_BASE_SANDBOX : self::OAUTH_BASE_PRODUCTION;
+        return $this->baseUrl;
     }
 
-    public function getBaseAuthorizationUrl()
+    public function getBaseAuthorizationUrl(): string
     {
         return $this->getBaseUrl().'/oauth/authorize';
     }
 
-    public function getBaseAccessTokenUrl(array $params)
+    public function getBaseAccessTokenUrl(array $params): string
     {
         return $this->getBaseUrl().'/oauth/token';
     }
 
     private function getApiBaseUrl():string
     {
-        return true === $this->sandbox ? self::API_BASE_SANDBOX : self::API_BASE_PRODUCTION;
+        return $this->apiBaseUrl;
     }
 
-    public function getResourceOwnerDetailsUrl(AccessToken $token)
+    public function getResourceOwnerDetailsUrl(AccessToken $token): string
     {
         return $this->getApiBaseUrl().'/'.$token->getValues()['orcid'].'/record';
     }
 
-    protected function getDefaultScopes()
+    protected function getDefaultScopes(): array
     {
         return [
             $this->scopes,
@@ -78,7 +94,7 @@ class Orcid extends AbstractProvider
         return new OrcidResourceOwner($response);
     }
 
-    protected function getAuthorizationHeaders($token = null)
+    protected function getAuthorizationHeaders($token = null): array
     {
         return [
             'Authorization' => "Bearer $token",
