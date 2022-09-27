@@ -78,7 +78,7 @@ class Orcid extends AbstractProvider
         ];
     }
 
-    protected function checkResponse(ResponseInterface $response, $data)
+    protected function checkResponse(ResponseInterface $response, $data): void
     {
         if (!empty($data['error'])) {
             throw new OrcidIdentityProviderException(
